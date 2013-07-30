@@ -5,19 +5,37 @@
 *
 */
 
-jQuery(function($) {
-  var $_formTranslation = $('.form-translation'), $_openTranslation = $('.open-translation');
 
-  $('.open-translation').click(function(evt) {
-      evt.stopPropagation();
-      $('.form-translation').toggleClass('show');
-  });
+lang_click = function() {
+	$current_id = $(this).parent().parent().attr('id');
+	$('#' + $current_id + ' .select-language').children('option[value="select"]').attr('selected', false);
+	$('#' + $current_id + ' .select-language').children('option[value="' + $(this).attr('id') + '"]').attr('selected', true);
+	$('#' + $current_id + '.form-translation').toggleClass('show');
+	$('#' + $current_id + ' .current-language input.new-word').css('display', 'none');
+	$('#' + $current_id + ' .current-language input.translated').remove();
+	$input = $(this).children('input');
+	$str = '<input type="text" name="' + $input.attr('name') + '" value="' + $input.val() + '" class="m-wrap translated" />';
+	$($str).appendTo($('#' + $current_id + ' .current-language'));
+	
 
-  // $(document).click(function(evt) {
-  //     if(!$(evt.target).is('.form-translation')){
-  //         $(".form-translation").removeClass('show');
-  //     }
-  // });
+}
+
+new_click = function(event) {
+	$current_id = $(this).parent().attr('id');
+	$('#' + $current_id + ' .select-language').children('option[selected="selected"]').attr('selected', false);
+	$('#' + $current_id + ' .select-language').children('option[value="select"]').attr('selected', true);
+	$('#' + $current_id + ' .current-language input.translated').remove();
+	$('#' + $current_id + ' .current-language input.new-word').css('display', 'block');
+	event.stopPropagation();
+	$('#' + $current_id + '.form-translation').toggleClass('show');
+
+}
+
+jQuery(function() {
+
+	$('.open-translation').click(new_click);
+	$('.chosen-language').click(lang_click);
+
   
 });
 

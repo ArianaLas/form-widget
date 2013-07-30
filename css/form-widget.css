@@ -132,6 +132,10 @@
     font: 300 12px 'Open Sans';
 }
 
+.form-translation .language-tabs span input[type="text"] {
+	display: none;
+}
+
 .form-translation .language-tabs .chosen-language {
     padding: 3px 5px;
     margin: 0 2px;
