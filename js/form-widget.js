@@ -28,15 +28,22 @@ new_click = function() {
 	$('#' + $current_id + '.form-translation').addClass('show');
 	$('#' + $current_id + ' #apply').click(function() {
 		$selected = $('#' + $current_id + ' .select-language option:selected').attr('value');
+//		if ($selected = ) {
 		$translation = $('#' + $current_id + ' .new-word').val();
 		$str = '<span id="' + $selected  + '" class="chosen-language">' + $selected;
-		$str += '<a href="/" class="remove icon-remove"></a>';
+		$str += '<a href="#" class="remove icon-remove"></a>';
 		$str += '<input class="m-wrap" type="hidden" name="translation[' + $selected + ']" value="' + $translation + '"/>';
 		$str += '</span>';
-		$($str).insertAfter($('#' + $current_id + ' .language-tabs').children().last()).click(lang_click);
-		return false;
+		$object = $($str).insertAfter($('#' + $current_id + ' .language-tabs').children().last());
+		$object.click(lang_click);
+		$object.click(remove_click);
+		return false; //link deactivated
 	});
+}
 
+remove_click = function() {
+	$(this).parent().remove();
+	return false;
 }
 
 jQuery(function() {
@@ -61,12 +68,12 @@ jQuery(function() {
 	$str += '</div></div>';
 	$($str).insertAfter('.form-translation input');
 	$str = '<div class="language-tabs">';
-	$str += '<span id="fr" class="chosen-language">FR';
-	$str += '<a href="/" class="remove icon-remove"></a>';
+	$str += '<span id="FR" class="chosen-language">FR';
+	$str += '<a href="#" class="remove icon-remove"></a>';
 	$str += '<input class="m-wrap" type="hidden" name="translation[FR]" value="po-francusku"/>';
 	$str += '</span>';
-	$str += '<span id="en" class="chosen-language">EN';
-	$str += '<a href="/" class="remove icon-remove"></a>';
+	$str += '<span id="EN" class="chosen-language">EN';
+	$str += '<a href="#" class="remove icon-remove"></a>';
 	$str += '<input class="m-wrap" type="hidden" name="translation[EN]" value="po-angielsku"/>';
 	$str += '</span>';
 	$str += '</div>';
@@ -83,6 +90,7 @@ jQuery(function() {
 
 	$('.open-translation').click(new_click);
 	$('.chosen-language').click(lang_click);
+	$('a.remove').click(remove_click);
 
   
 });
