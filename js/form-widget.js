@@ -36,14 +36,13 @@ new_click = function() {
 		$str += '</span>';
 		$object = $($str).insertAfter($('#' + $current_id + ' .language-tabs').children().last());
 		$object.click(lang_click);
-		$object.click(remove_click);
+		$object.children(".remove").click(remove_click);
 		return false; //link deactivated
 	});
 }
 
 remove_click = function() {
 	$(this).parent().remove();
-	return false;
 }
 
 jQuery(function() {
