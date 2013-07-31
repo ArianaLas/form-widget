@@ -79,8 +79,22 @@
 
 .form-translation .translation-options .translation-content {
     border: 1px solid #d9d9d9;
-    height: 112px;
+    /*height: 112px;*/
     position: relative;
+    padding: 0 5%;
+
+    zoom: 1;
+}
+
+.form-translation .translation-options .translation-content:before {
+    content: '';
+    display: block;
+}
+
+.form-translation .translation-options .translation-content:after {
+    content: '';
+    display: table;
+    clear: both;
 }
 
 .form-translation .translation-options .translation-content .hide-border {
@@ -93,8 +107,8 @@
 }
 
 .form-translation .translation-options .translation-content .select-language {
-    width: 90%;
-    margin: 16px 5%;
+    width: 100%;
+    margin: 16px 0;
 }
 
 .form-translation .translation-options .translation-content .select-language option {
@@ -103,15 +117,16 @@
 
 .form-translation .translation-options .translation-content .current-language .m-wrap {
     background: #fff;
-    margin-left: 5%;
     border: 1px solid #d9d9d9 !important;
     float: left;
-    width: 50%;
+    width: 60%;
+    margin-bottom: 10px;
+    margin-right: 4%;
 }
 
 .form-translation .translation-options .translation-content .current-language .btn {
-    float: right;
-    margin-right: 5%;
+    float: left;
+    margin-bottom: 10px;
 }
 
 .form-translation .translation-options .translation-content .current-language .m-wrap:focus {
