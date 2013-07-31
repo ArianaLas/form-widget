@@ -1,6 +1,6 @@
 /*
- * @author Damian Duda <dduda@nexway.com>
- */
+* @author Damian Duda <dduda@nexway.com>
+*/
 
 /* FORM WIDGET STYLES */
 
@@ -8,8 +8,8 @@
     position: relative;
 }
 
-.form-translation input[type="text"].resp {
-    width: 300px;
+.form-translation input[type="text"].lang-translation {
+    /*width: 300px;*/
     background: #fff !important;
 }
 
@@ -58,7 +58,6 @@
 }
 
 .form-translation .translation-options {
-/*    display: none;*/
     position: absolute;
     bottom: 34px;
     left: 0;
@@ -69,7 +68,7 @@
     width: 100%;
     /*box-shadow: 0 -1px 1px rgba(0,0,0,.2);*/
     transition: all .4s ease;
-    -webkit-transition: all .4s ease;    
+    -webkit-transition: all .4s ease;
 }
 
 .form-translation.show .translation-options {
@@ -80,7 +79,6 @@
 
 .form-translation .translation-options .translation-content {
     border: 1px solid #d9d9d9;
-    /*width: 100%;*/
     height: 112px;
     position: relative;
 }
@@ -96,7 +94,7 @@
 
 .form-translation .translation-options .translation-content .select-language {
     width: 90%;
-    margin: 5% 5%;
+    margin: 16px 5%;
 }
 
 .form-translation .translation-options .translation-content .select-language option {
@@ -108,6 +106,7 @@
     margin-left: 5%;
     border: 1px solid #d9d9d9 !important;
     float: left;
+    width: 50%;
 }
 
 .form-translation .translation-options .translation-content .current-language .btn {
@@ -124,16 +123,14 @@
     position: absolute;
     top: 6px;
     left: 30px;
+    right: 6px;
     padding: 0;
+    overflow: auto;
 }
 
 .form-translation .language-tabs span {
     display: inline-block;
     font: 300 12px 'Open Sans';
-}
-
-.form-translation .language-tabs span input[type="text"] {
-	display: none;
 }
 
 .form-translation .language-tabs .chosen-language {
@@ -159,7 +156,3 @@
 .form-translation .language-tabs .chosen-language .remove:hover {
     color: #333;
 }
-
-
-
-

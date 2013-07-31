@@ -1,7 +1,7 @@
 /*
 * jQuery Form Widget to translate
 *
-* @author Damian Duda <dduda@nexway.com>
+* @author Ariana Las <ariana.las@gmail.com>
 *
 */
 
@@ -15,7 +15,7 @@ lang_click = function() {
 	$input = $(this).children('input');
 	$str = '<input type="text" name="' + $input.attr('name') + '" value="' + $input.val() + '" class="m-wrap translated" />';
 	$($str).appendTo($('#' + $current_id + ' .current-language'));
-	$('#' + $current_id + '.form-translation').toggleClass('show');
+	$('#' + $current_id + '.form-translation').addClass('show');
 
 }
 
@@ -24,8 +24,18 @@ new_click = function() {
 	$('#' + $current_id + ' .select-language').children('option[selected="selected"]').attr('selected', false);
 	$('#' + $current_id + ' .select-language').children('option[value="select"]').attr('selected', true);
 	$('#' + $current_id + ' .current-language input.translated').remove();
-	$('#' + $current_id + ' .current-language input.new-word').css('display', 'block');
-	$('#' + $current_id + '.form-translation').toggleClass('show');
+	$('#' + $current_id + ' .current-language input.new-word').attr('value', '').attr('placeholder', 'Text to translate').css('display', 'inline-block');
+	$('#' + $current_id + '.form-translation').addClass('show');
+	$('#' + $current_id + ' #apply').click(function() {
+		$selected = $('#' + $current_id + ' .select-language option:selected').attr('value');
+		$translation = $('#' + $current_id + ' .new-word').val();
+		$str = '<span id="' + $selected  + '" class="chosen-language">' + $selected;
+		$str += '<a href="/" class="remove icon-remove"></a>';
+		$str += '<input class="m-wrap" type="hidden" name="translation[' + $selected + ']" value="' + $translation + '"/>';
+		$str += '</span>';
+		$($str).insertAfter($('#' + $current_id + ' .language-tabs').children().last()).click(lang_click);
+		return false;
+	});
 
 }
 
@@ -35,17 +45,17 @@ jQuery(function() {
 	$str += '<div class="translation-content"\n>';
 	$str += '<select class="select-language select2" tabindex="1">\n';
 	$str += '<option value="select" selected="selected">Select language</option>';
-	$str += '<option value="en">English</option>';
-	$str += '<option value="de">German</option>';
-	$str += '<option value="fr">French</option>';
-	$str += '<option value="es">Spanish</option>';
-	$str += '<option value="pt">Portuguese</option>';
-	$str += '<option value="pl">Polish</option>';
-	$str += '<option value="jp">Japanese</option>';
+	$str += '<option value="EN">English</option>';
+	$str += '<option value="DE">German</option>';
+	$str += '<option value="FR">French</option>';
+	$str += '<option value="ES">Spanish</option>';
+	$str += '<option value="PT">Portuguese</option>';
+	$str += '<option value="PL">Polish</option>';
+	$str += '<option value="JP">Japanese</option>';
 	$str += '</select>';
 	$str += '<div class="current-language">';
 	$str += '<input class="m-wrap new-word" type="text" placeholder="Text to translate" >';
-	$str += '<a href="#" id="apply" class="btn blue" value="apply">Apply</a>';
+	$str += '<a href="#apply" id="apply" class="btn blue" value="apply">Apply</a>';
 	$str += '</div>';
 	$str += '<span class="hide-border"></span>';
 	$str += '</div></div>';
@@ -53,11 +63,11 @@ jQuery(function() {
 	$str = '<div class="language-tabs">';
 	$str += '<span id="fr" class="chosen-language">FR';
 	$str += '<a href="/" class="remove icon-remove"></a>';
-	$str += '<input class="m-wrap" type="text" name="fr" value="po-francusku"/>';
+	$str += '<input class="m-wrap" type="hidden" name="translation[FR]" value="po-francusku"/>';
 	$str += '</span>';
 	$str += '<span id="en" class="chosen-language">EN';
 	$str += '<a href="/" class="remove icon-remove"></a>';
-	$str += '<input class="m-wrap" type="text" name="en" value="po-angielsku"/>';
+	$str += '<input class="m-wrap" type="hidden" name="translation[EN]" value="po-angielsku"/>';
 	$str += '</span>';
 	$str += '</div>';
 	$($str).insertAfter('.translation-options');
