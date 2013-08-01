@@ -4,17 +4,27 @@
 
 /* FORM WIDGET STYLES */
 
+body {
+    background:;
+}
+
 .form-translation {
     position: relative;
 }
 
-.form-translation input[type="text"].lang-translation {
+.form-translation input[type="text"].lang-translation,  .form-translation textarea.lang-translation{
     /*width: 300px;*/
     background: #fff !important;
+    border: 1px solid #e5e5e5;
 }
 
 .form-translation .open-translation {
     cursor: pointer;
+}
+
+.form-translation .open-translation:hover {
+    background: #eee;
+    box-shadow: inset 0 -4px 7px rgba(255,255,255,.9);
 }
 
 .form-translation .open-translation .icon-reorder {
@@ -120,13 +130,17 @@
     border: 1px solid #d9d9d9 !important;
     float: left;
     width: 60%;
-    margin-bottom: 10px;
-    margin-right: 4%;
+    margin-bottom: 15px;
+    margin-right: 1%;
+    display: inline-block;
 }
 
 .form-translation .translation-options .translation-content .current-language .btn {
-    float: left;
-    margin-bottom: 10px;
+    float: right;
+    margin-bottom: 15px;
+    padding-left: 0;
+    padding-right: 0;
+    width: 25%;
 }
 
 .form-translation .translation-options .translation-content .current-language .m-wrap:focus {
@@ -153,6 +167,7 @@
     margin: 0 2px;
     color: #555;
     background: #eee;
+
 }
 
 .form-translation .language-tabs .chosen-language:hover {
@@ -170,4 +185,11 @@
 
 .form-translation .language-tabs .chosen-language .remove:hover {
     color: #333;
+}
+
+
+@media (max-width: 480px) {
+    .form-translation .translation-options .translation-content .current-language .m-wrap {
+        width: 60%;
+    }
 }
