@@ -31,9 +31,11 @@ new_click = function() {
 
 apply_click = function() {
 	//input name!!!
+	alert("lalala");
 	$main = $(this).parent().parent().parent().siblings('input');
 	$name = $main.attr('name');
 	$current_div = $main.parent();
+	alert($current_div.attr('id'));
 	$selected = $current_div.find('.select-language option:selected').attr('value');
 	$translation = $current_div.find('.new-word').val();
 	if ($selected != "select" && $translation != "") {
@@ -62,6 +64,7 @@ remove_click = function() {
 }
 
 jQuery(function() {
+	$('.lang-translation').wrap('<div class="input-prepend form-translation" />')
 	$('.form-translation').prepend('<span class="add-on open-translation"><i class="icon-reorder"></i><i class="icon-caret-up"></i></span>');
 	$str = '<div class="translation-options">\n';
 	$str += '<div class="translation-content"\n>';
