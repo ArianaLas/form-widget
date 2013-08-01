@@ -31,11 +31,9 @@ new_click = function() {
 
 apply_click = function() {
 	//input name!!!
-	alert("lalala");
 	$main = $(this).parent().parent().parent().siblings('input');
 	$name = $main.attr('name');
 	$current_div = $main.parent();
-	alert($current_div.attr('id'));
 	$selected = $current_div.find('.select-language option:selected').attr('value');
 	$translation = $current_div.find('.new-word').val();
 	if ($selected != "select" && $translation != "") {
@@ -80,7 +78,7 @@ jQuery(function() {
 	$str += '</select>';
 	$str += '<div class="current-language">';
 	$str += '<input class="m-wrap new-word" type="text" placeholder="Text to translate" >';
-	$str += '<a href="/" id="apply" class="btn blue" value="apply">Apply</a>';
+	$str += '<a href="/" class="btn blue apply">Apply</a>';
 	$str += '</div>';
 	$str += '<span class="hide-border"></span>';
 	$str += '</div></div>';
@@ -111,8 +109,8 @@ jQuery(function() {
 
 	$('.open-translation').click(new_click);
 	$('.chosen-language').click(lang_click);
-	$('#apply').click(apply_click);
-	$('a.remove').click(remove_click);
+	$('.apply').click(apply_click);
+	$('.remove').click(remove_click);
 
   
 });
