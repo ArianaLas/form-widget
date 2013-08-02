@@ -42,10 +42,19 @@ apply_click = function() {
 		$str += '<input class="m-wrap" type="hidden" name="' + $name + '[' + $selected + ']" value="' + $translation + '"/>';
 		$str += '</span>';
 		$object = $($str).appendTo($current_div.find('.language-tabs'));
-		$object.css({backgroundColor: "#FBC21F"});
+		$object.css({backgroundColor: "#ffb848"});
 		$object.animate({backgroundColor: "#eee"}, 700);
 		$object.click(lang_click);
 		$object.children(".remove").click(remove_click);
+
+		$(".chosen-language").mouseover(function(){
+			$(this).css({backgroundColor: "#e1e1e1"});
+		});
+
+		$(".chosen-language").mouseleave(function(){
+			$(this).css({backgroundColor: "#eee"});
+		});		
+
 	}
 	return false; //link deactivated
 
@@ -77,8 +86,8 @@ jQuery(function() {
 	$str += '<option value="JP">Japanese</option>';
 	$str += '</select>';
 	$str += '<div class="current-language">';
-	$str += '<input class="m-wrap new-word" type="text" placeholder="Text to translate" >';
-	$str += '<a href="/" class="btn blue apply">Apply</a>';
+	$str += '<textarea class="m-wrap new-word" type="text" placeholder="Text to translate" rows="1" ></textarea>';
+	$str += '<a href="/" id="apply" class="btn blue" value="apply">Apply</a>';
 	$str += '</div>';
 	$str += '<span class="hide-border"></span>';
 	$str += '</div></div>';
@@ -109,8 +118,8 @@ jQuery(function() {
 
 	$('.open-translation').click(new_click);
 	$('.chosen-language').click(lang_click);
-	$('.apply').click(apply_click);
-	$('.remove').click(remove_click);
+	$('#apply').click(apply_click);
+	$('a.remove').click(remove_click);
 
   
 });

@@ -4,10 +4,6 @@
 
 /* FORM WIDGET STYLES */
 
-body {
-    background:;
-}
-
 .form-translation {
     position: relative;
 }
@@ -121,15 +117,14 @@ body {
     margin: 16px 0;
 }
 
-.form-translation .translation-options .translation-content .select-language option {
-    text-transform: uppercase;
-}
-
 .form-translation .translation-options .translation-content .current-language .m-wrap {
     background: #fff;
     border: 1px solid #d9d9d9 !important;
     float: left;
+    min-width: 40%;
     width: 60%;
+    max-width: 60%;
+    max-height: 100px;
     margin-bottom: 15px;
     margin-right: 1%;
     display: inline-block;
@@ -166,7 +161,7 @@ body {
     padding: 3px 5px;
     margin: 0 2px;
     color: #555;
-    background: #eee;
+    background: #ffb848;
 
 }
 
@@ -185,11 +180,4 @@ body {
 
 .form-translation .language-tabs .chosen-language .remove:hover {
     color: #333;
-}
-
-
-@media (max-width: 480px) {
-    .form-translation .translation-options .translation-content .current-language .m-wrap {
-        width: 60%;
-    }
 }
