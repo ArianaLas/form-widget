@@ -12,9 +12,10 @@ body {
     position: relative;
 }
 
-.form-translation input[type="text"].lang-translation {
+.form-translation input[type="text"].lang-translation,  .form-translation textarea.lang-translation{
     /*width: 300px;*/
     background: #fff !important;
+    border: 1px solid #e5e5e5;
 }
 
 .form-translation .open-translation {

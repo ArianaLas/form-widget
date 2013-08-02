@@ -62,6 +62,7 @@ remove_click = function() {
 }
 
 jQuery(function() {
+	$('.lang-translation').wrap('<div class="input-prepend form-translation" />')
 	$('.form-translation').prepend('<span class="add-on open-translation"><i class="icon-reorder"></i><i class="icon-caret-up"></i></span>');
 	$str = '<div class="translation-options">\n';
 	$str += '<div class="translation-content"\n>';
