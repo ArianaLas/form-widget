@@ -5,36 +5,77 @@
 *
 */
 
-/*
-* jQuery Form Widget to translate
-*
-* @author Ariana Las <ariana.las@gmail.com>
-*
-*/
-
 
 lang_click = function() {
 	$current_div = $(this).parent().parent();
-	$current_div.find('.select-language').children('option[value="select"]').attr('selected', false);
+	$current_div.find('.select-language').children('option[selected="selected"]').attr('selected', false);
 	$current_div.find('.select-language').children('option[value="' + $(this).attr('id') + '"]').attr('selected', true);
+
 	$current_div.find('.current-language .new-word').css('display', 'none');
-	$current_div.find('.current-language .translated').remove();
 	$input = $(this).children('input');
-	$str = '<textarea name="' + $input.attr('name') + '" class="m-wrap translated" rows="1"></textarea>';
-	$current_div.find('.current-language').prepend($str);
-	$current_div.find('.current-language .translated').append($input.val());
+
+	$current_div.find('.current-language .translated').html($input.val()).val($input.val());
+	$current_div.find('.current-language .translated').css('display', 'inline-block');
+
+	$current_div.find('.apply').css('display', 'none');
+	$current_div.find('.update').css('display', 'inline-block');
 	$current_div.addClass('show');
 
 }
 
+update_click = function() {
+	$current_div = $(this).parent().parent().parent().parent();
+	$input = $(this).siblings('.translated');
+	$selected = $current_div.find('.select-language option[selected="selected"]').attr('value');
+
+	$object = $current_div.find('.language-tabs span[id="' + $selected + '"]');
+	$object.children('input').attr('value', $input.val());
+	$object.css({backgroundColor: "#ffb848"});
+	$object.animate({backgroundColor: "#eee"}, 700);
+	$current_div.removeClass('show');
+	
+	return false; //link deactivated
+}
+
 new_click = function() {
 	$current_div = $(this).parent();
-
+	$current_div.find('.update').css('display', 'none');
+	$current_div.find('.apply').css('display', 'inline-block');
 	$current_div.find('.select-language').children('option[selected="selected"]').attr('selected', false);
 	$current_div.find('.select-language').children('option[value="select"]').attr('selected', true);
-	$current_div.find('.current-language .translated').remove();
+	$current_div.find('.current-language .translated').css('display', 'none');
 	$current_div.find('.current-language .new-word').attr('value', '').attr('placeholder', 'Text to translate').css('display', 'inline-block');
 	$current_div.addClass('show');
+}
+
+option_changed = function() {
+	$current_div = $(this).parent().parent().parent();
+	$selected = $(this).children('option:selected').attr('value');
+
+	$current_div.find('.select-language').children('option[selected="selected"]').attr('selected', false);
+	$current_div.find('.select-language').children('option[value="' + $selected + '"]').attr('selected', true);
+
+	$current_div.find('.update').css('display', 'none');
+	$current_div.find('.apply').css('display', 'inline-block');
+	$the_same = false;
+
+	$current_div.find('.language-tabs').children('span').each(function() {
+		if ($selected == $(this).attr('id')) {
+			$current_div.find('.apply').css('display', 'none');
+			$current_div.find('.update').css('display', 'inline-block');
+			$the_same = true;
+			return;
+		}
+	});
+
+	if ($the_same == false) {
+		$current_div.find('.current-language .translated').css('display', 'none');
+		$current_div.find('.current-language .new-word').attr('value', '').attr('placeholder', 'Text to translate').css('display', 'inline-block');
+	} else {
+		$current_div.find('.current-language .new-word').css('display', 'none');
+		$input = $current_div.find('.language-tabs span[id=' + $selected + ']').children('input');
+		$current_div.find('.current-language .translated').css('display', 'inline-block').html($input.val()).val($input.val());
+	}
 }
 
 apply_click = function() {
@@ -46,7 +87,7 @@ apply_click = function() {
 	$translation = $current_div.find('.new-word').val();
 	if ($selected != "select" && $translation != "") {
 		$str = '<span id="' + $selected  + '" class="chosen-language">' + $selected;
-		$str += '<a href="#" class="remove icon-remove"></a>';
+		$str += '<a href="/" class="remove icon-remove"></a>';
 		$str += '<input class="m-wrap" type="hidden" name="' + $name + '[' + $selected + ']" value="' + $translation + '"/>';
 		$str += '</span>';
 		$object = $($str).appendTo($current_div.find('.language-tabs'));
@@ -55,24 +96,27 @@ apply_click = function() {
 		$object.click(lang_click);
 		$object.children(".remove").click(remove_click);
 
-		$(".chosen-language").mouseover(function(){
+		$object.mouseover(function(){
 			$(this).css({backgroundColor: "#e1e1e1"});
 		});
 
-		$(".chosen-language").mouseleave(function(){
+		$object.mouseleave(function(){
 			$(this).css({backgroundColor: "#eee"});
 		});	
+		$current_div.find('.apply').css('display', 'none');
+		$current_div.find('.update').css('display', 'inline-block');
 	}
 	return false; //link deactivated
-
 }
 
 remove_click = function() {
 	//input name!!!
-	$main = $(this).parent().parent().siblings('input');
-	$current_div = $main.parent();
-	$current_div.removeClass('show');
-	$(this).parent().remove();
+	if (confirm("Delete?")) {
+		$main = $(this).parent().parent().siblings('input');
+		$current_div = $main.parent();
+		$current_div.removeClass('show');
+		$(this).parent().remove();
+	}
 
 	return false; //link deactivated
 }
@@ -94,23 +138,15 @@ jQuery(function() {
 		$str += '<option value="JP">Japanese</option>';
 		$str += '</select>';
 		$str += '<div class="current-language">';
+		$str += '<textarea class="m-wrap translated" rows="1"></textarea>';
 		$str += '<textarea class="m-wrap new-word" placeholder="Text to translate" rows="1"></textarea>';
 		$str += '<a href="/" class="btn blue apply">Apply</a>';
+		$str += '<a href="/" class="btn blue update">Update</a>';
 		$str += '</div>';
 		$str += '<span class="hide-border"></span>';
 		$str += '</div></div>';
 		$($str).appendTo($(this));
 		$str = '<div class="language-tabs">';
-		/* SOME EXAMPLES OF TRANSLATIONS
-		$str += '<span id="FR" class="chosen-language">FR';
-		$str += '<a href="/" class="remove icon-remove"></a>';
-		$str += '<input class="m-wrap" type="hidden" name="translation1[FR]" value="po-francusku"/>';
-		$str += '</span>';
-		$str += '<span id="EN" class="chosen-language">EN';
-		$str += '<a href="/" class="remove icon-remove"></a>';
-		$str += '<input class="m-wrap" type="hidden" name="translation1[EN]" value="po-angielsku"/>';
-		$str += '</span>';
-		*/
 		$str += '</div>';
 		$($str).insertAfter($(this).children('.translation-options'));
 	});
@@ -129,6 +165,8 @@ jQuery(function() {
 	$('.chosen-language').click(lang_click);
 	$('.apply').click(apply_click);
 	$('.remove').click(remove_click);
+	$('.select-language').change(option_changed);
+	$('.update').click(update_click);
 
   
 });
