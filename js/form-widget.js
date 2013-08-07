@@ -5,22 +5,46 @@
 *
 */
 
+/* I need to see how to trigger this to do not copy it in two places
+one_opened = function() {
+			alert($(this).children('input.lang-translation').attr('name'));
+			alert('hello');
+	$('.form-translation').each(function() {
+		if ($(this).hasClass('show')) {
+			$(this).removeClass('show');
+			return;
+		}
+	});
+}
+*/
 
 lang_click = function() {
 	$current_div = $(this).parent().parent();
-	$current_div.find('.select-language').children('option[selected="selected"]').attr('selected', false);
-	$current_div.find('.select-language').children('option[value="' + $(this).attr('id') + '"]').attr('selected', true);
+	$current_div.children('.open-translation').removeClass('open');
+	$(this).siblings().removeClass('open');
+	$(this).toggleClass('open');
+	if ($(this).hasClass('open')) {
+		$current_div.find('.select-language').children('option[selected="selected"]').attr('selected', false);
+		$current_div.find('.select-language').children('option[value="' + $(this).attr('id') + '"]').attr('selected', true);
 
-	$current_div.find('.current-language .new-word').css('display', 'none');
-	$input = $(this).children('input');
+		$current_div.find('.current-language .new-word').css('display', 'none');
+		$input = $(this).children('input');
 
-	$current_div.find('.current-language .translated').html($input.val()).val($input.val());
-	$current_div.find('.current-language .translated').css('display', 'inline-block');
+		$current_div.find('.current-language .translated').html($input.val()).val($input.val());
+		$current_div.find('.current-language .translated').css('display', 'inline-block');
 
-	$current_div.find('.apply').css('display', 'none');
-	$current_div.find('.update').css('display', 'inline-block');
-	$current_div.addClass('show');
-
+		$current_div.find('.apply').css('display', 'none');
+		$current_div.find('.update').css('display', 'inline-block');
+		$('.form-translation').each(function() {
+			if ($(this).hasClass('show')) {
+				$(this).removeClass('show');
+				return;
+			}
+		});
+		$current_div.addClass('show');
+	} else {
+		$current_div.removeClass('show');
+	}
 }
 
 update_click = function() {
@@ -39,13 +63,25 @@ update_click = function() {
 
 new_click = function() {
 	$current_div = $(this).parent();
-	$current_div.find('.update').css('display', 'none');
-	$current_div.find('.apply').css('display', 'inline-block');
-	$current_div.find('.select-language').children('option[selected="selected"]').attr('selected', false);
-	$current_div.find('.select-language').children('option[value="select"]').attr('selected', true);
-	$current_div.find('.current-language .translated').css('display', 'none');
-	$current_div.find('.current-language .new-word').attr('value', '').attr('placeholder', 'Text to translate').css('display', 'inline-block');
-	$current_div.addClass('show');
+	$current_div.find('.chosen-language').removeClass('open');
+	$(this).toggleClass('open');
+	if ($(this).hasClass('open')) {
+		$current_div.find('.update').css('display', 'none');
+		$current_div.find('.apply').css('display', 'inline-block');
+		$current_div.find('.select-language').children('option[selected="selected"]').attr('selected', false);
+		$current_div.find('.select-language').children('option[value="select"]').attr('selected', true);
+		$current_div.find('.current-language .translated').css('display', 'none');
+		$current_div.find('.current-language .new-word').attr('value', '').attr('placeholder', 'Text to translate').css('display', 'inline-block');
+		$('.form-translation').each(function() {
+			if ($(this).hasClass('show')) {
+				$(this).removeClass('show');
+				return;
+			}
+		});
+		$current_div.addClass('show');
+	} else {
+		$current_div.removeClass('show');
+	}
 }
 
 option_changed = function() {
@@ -71,6 +107,7 @@ option_changed = function() {
 	if ($the_same == false) {
 		$current_div.find('.current-language .translated').css('display', 'none');
 		$current_div.find('.current-language .new-word').attr('value', '').attr('placeholder', 'Text to translate').css('display', 'inline-block');
+		$current_div.find('.current-language .new-word').focus();
 	} else {
 		$current_div.find('.current-language .new-word').css('display', 'none');
 		$input = $current_div.find('.language-tabs span[id=' + $selected + ']').children('input');
@@ -106,6 +143,8 @@ apply_click = function() {
 		$current_div.find('.apply').css('display', 'none');
 		$current_div.find('.update').css('display', 'inline-block');
 	}
+	$current_div.children('.open-translation').removeClass('open');
+	$object.toggleClass('open');
 	return false; //link deactivated
 }
 
@@ -154,6 +193,8 @@ jQuery(function() {
 
 
 	$('body').click(function() {
+		$('.form-translation .open-translation').removeClass('open');
+		$('.form-translation .chosen-language').removeClass('open');
 		$('.form-translation').removeClass('show');
 	});
 	
