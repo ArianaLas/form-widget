@@ -71,7 +71,7 @@ new_click = function() {
 		$current_div.find('.select-language').children('option[selected="selected"]').attr('selected', false);
 		$current_div.find('.select-language').children('option[value="select"]').attr('selected', true);
 		$current_div.find('.current-language .translated').css('display', 'none');
-		$current_div.find('.current-language .new-word').attr('value', '').attr('placeholder', 'Text to translate').css('display', 'inline-block');
+		$current_div.find('.current-language .new-word').attr('placeholder', 'Text to translate').attr('value', '').val('').css('display', 'inline-block');
 		$('.form-translation').each(function() {
 			if ($(this).hasClass('show')) {
 				$(this).removeClass('show');
@@ -86,6 +86,8 @@ new_click = function() {
 
 option_changed = function() {
 	$current_div = $(this).parent().parent().parent();
+	$current_div.find('.chosen-language').removeClass('open');
+	$current_div.children('.open-translate').toggleClass('open');
 	$selected = $(this).children('option:selected').attr('value');
 
 	$current_div.find('.select-language').children('option[selected="selected"]').attr('selected', false);
